@@ -60,7 +60,13 @@ export function Chip({ texto, activo, onPress, marca }: { texto: string; activo:
 }
 
 const PATHS: Record<string, string[]> = {
-  hoy: ['M8 22h8', 'M12 11v11', 'm19 3-7 8-7-8Z'],
+  hoy: ['m3 10 9-7 9 7', 'M5 9v11a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9'],
+  copa: ['M8 22h8', 'M12 11v11', 'm19 3-7 8-7-8Z'],
+  lista: ['M9 6h11', 'M9 12h11', 'M9 18h11', 'm3 6 1 1 2-2', 'm3 12 1 1 2-2', 'm3 18 1 1 2-2'],
+  mapa: ['M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11Z'],
+  libro: ['M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z', 'M4 21V5'],
+  reloj: ['M12 7v5l3 2'],
+  flecha: ['m9 18 6-6-6-6'],
   recetas: ['m20 20-3.5-3.5'],
   mibar: ['M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3Z', 'M8 13h8'],
   corazon: ['M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'],
@@ -71,7 +77,7 @@ const PATHS: Record<string, string[]> = {
   check: ['M20 6 9 17l-5-5'],
   campana: ['M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9', 'M10.3 21a1.94 1.94 0 0 0 3.4 0'],
 };
-const CIRCULOS: Record<string, [number, number, number]> = { recetas: [11, 11, 7], cuenta: [12, 8, 4] };
+const CIRCULOS: Record<string, [number, number, number]> = { recetas: [11, 11, 7], cuenta: [12, 8, 4], mapa: [12, 10, 2.5], reloj: [12, 12, 9] };
 
 export function Icono({ nombre, tam = 22, tono = 'currentColor', grosor = 2, relleno }: { nombre: keyof typeof PATHS; tam?: number; tono?: string; grosor?: number; relleno?: string }) {
   const c = CIRCULOS[nombre];

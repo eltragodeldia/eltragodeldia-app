@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
 import { ScrollView, View } from 'react-native';
+import { useScrollToTop } from 'expo-router';
+import { useMemo, useRef, type ComponentRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FilaReceta } from '../../components/TarjetaReceta';
 import { Boton, Chip, Etiqueta, Texto, Titular } from '../../components/ui';
@@ -9,6 +10,8 @@ import { useEstado } from '../../lib/estado';
 import { color } from '../../lib/tema';
 
 export default function MiBar() {
+  const ref = useRef<ComponentRef<typeof ScrollView>>(null);
+  useScrollToTop(ref);
   const { t, idioma, recetas, mibar, alternarMiBar, cambiar } = useEstado();
   const tengo = useMemo(() => new Set(mibar), [mibar]);
   const nombre = (k: string) => { const x = BOTELLAS.find((b) => b.clave === k) ?? INGREDIENTES.find((i) => i.clave === k); return x ? x[idioma] : k; };
@@ -38,7 +41,7 @@ export default function MiBar() {
 
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }}>
+      <ScrollView ref={ref} contentContainerStyle={{ padding: 20, gap: 16 }}>
         <View style={{ gap: 6 }}>
           <Titular>{t.mibar.titulo}</Titular>
           <Texto>{t.mibar.lead}</Texto>
