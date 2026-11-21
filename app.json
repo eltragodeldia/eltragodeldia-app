@@ -48,6 +48,14 @@
     "backgroundColor": "#FDF6EC",
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "288c11fb-9c18-40cb-b791-74d2837efe0c"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
