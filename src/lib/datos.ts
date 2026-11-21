@@ -1,32 +1,34 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import type { Receta } from './compartido/tipos';
+import type { Lugar, Receta } from './compartido/tipos';
 import type { Idioma } from './compartido/idioma';
 import { supabase } from './supabase';
 import demo from './demo.json';
 import demoArticulos from './demo-articulos.json';
+import demoLugares from './demo-lugares.json';
 
 export interface ArticuloApp { slug: string; titulo: string; resumen: string | null; titulo_en: string | null; resumen_en: string | null; foto_url: string | null; publicado_en: string | null; categoria: string | null }
 
-const CLAVE = 'etd-catalogo-v2';
-const DEMO = (): Catalogo => ({ recetas: demo as unknown as Receta[], articulos: demoArticulos as ArticuloApp[], actualizado: Date.now(), origen: 'demo' });
+const CLAVE = 'etd-catalogo-v3';
+const DEMO = (): Catalogo => ({ recetas: demo as unknown as Receta[], articulos: demoArticulos as ArticuloApp[], lugares: demoLugares as unknown as Lugar[], actualizado: Date.now(), origen: 'demo' });
 
-export interface Catalogo { recetas: Receta[]; articulos: ArticuloApp[]; actualizado: number; origen: 'red' | 'guardado' | 'demo' }
+export interface Catalogo { recetas: Receta[]; articulos: ArticuloApp[]; lugares: Lugar[]; actualizado: number; origen: 'red' | 'guardado' | 'demo' }
 
 /** Recetas publicadas: primero la red; sin conexión, la última copia guardada; sin base configurada, las de ejemplo. */
 export async function cargarCatalogo(): Promise<Catalogo> {
   if (!supabase) return DEMO();
   try {
-    const [rec, art] = await Promise.all([
+    const [rec, art, lug] = await Promise.all([
       supabase.from('recetas').select('*').eq('publicado', true).eq('exclusivo', false).order('publicado_en', { ascending: false }),
       supabase.from('articulos').select('slug,titulo,resumen,titulo_en,resumen_en,foto_url,publicado_en,categoria').eq('publicado', true).eq('exclusivo', false).order('publicado_en', { ascending: false }),
+      supabase.from('lugares').select('*').eq('publicado', true).order('nombre'),
     ]);
     if (rec.error) throw rec.error;
-    const cat: Catalogo = { recetas: (rec.data ?? []) as Receta[], articulos: (art.data ?? []) as ArticuloApp[], actualizado: Date.now(), origen: 'red' };
+    const cat: Catalogo = { recetas: (rec.data ?? []) as Receta[], articulos: (art.data ?? []) as ArticuloApp[], lugares: (lug.data ?? []) as Lugar[], actualizado: Date.now(), origen: 'red' };
     AsyncStorage.setItem(CLAVE, JSON.stringify(cat)).catch(() => {});
     return cat;
   } catch {
     const guardado = await AsyncStorage.getItem(CLAVE).catch(() => null);
-    if (guardado) { const g = JSON.parse(guardado) as Catalogo; return { ...g, articulos: g.articulos ?? [], origen: 'guardado' }; }
+    if (guardado) { const g = JSON.parse(guardado) as Catalogo; return { ...g, articulos: g.articulos ?? [], lugares: g.lugares ?? [], origen: 'guardado' }; }
     return DEMO();
   }
 }
@@ -54,4 +56,10 @@ export function tragoDelDia(recetas: Receta[], fecha = new Date()): Receta | und
   const lista = [...recetas].sort((a, b) => a.slug.localeCompare(b.slug));
   const dia = Math.floor(Date.UTC(fecha.getFullYear(), fecha.getMonth(), fecha.getDate()) / 86400000);
   return lista[((dia * 7919) % lista.length + lista.length) % lista.length];
+}
+
+/** El lugar en el idioma pedido. */
+export function lugarEnIdioma(l: Lugar, idioma: Idioma): Lugar {
+  if (idioma === 'es') return l;
+  return { ...l, porque: l.porque_en ?? l.porque, pedido: l.pedido_en ?? l.pedido, ocasion: l.ocasion_en ?? l.ocasion, horario: l.horario_en ?? l.horario };
 }

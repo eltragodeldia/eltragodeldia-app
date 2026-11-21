@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getLocales } from 'expo-localization';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Idioma } from './compartido/idioma';
-import type { Receta } from './compartido/tipos';
-import { cargarCatalogo, enIdioma, type Catalogo } from './datos';
+import type { Lugar, Receta } from './compartido/tipos';
+import { cargarCatalogo, enIdioma, lugarEnIdioma, type Catalogo } from './datos';
 import { TEXTOS, type Textos } from './textos';
 
 // Todo se guarda en el teléfono. Con cuenta (próxima versión) se sincroniza con app_favoritos, app_mibar, app_lista y app_ajustes.
@@ -20,6 +20,7 @@ interface Ctx extends Guardado {
   catalogo: Catalogo | null;
   recetas: Receta[];
   receta: (slug: string) => Receta | undefined;
+  lugares: Lugar[];
   cambiar: (p: Partial<Guardado>) => void;
   alternarFavorito: (slug: string) => void;
   alternarMiBar: (clave: string) => void;
@@ -49,6 +50,7 @@ export function EstadoProvider({ children }: { children: ReactNode }) {
   const alternar = (lista: string[], v: string) => (lista.includes(v) ? lista.filter((x) => x !== v) : [v, ...lista]);
 
   const recetas = useMemo(() => (catalogo?.recetas ?? []).map((r) => enIdioma(r, g.idioma)), [catalogo, g.idioma]);
+  const lugares = useMemo(() => (catalogo?.lugares ?? []).map((l) => lugarEnIdioma(l, g.idioma)), [catalogo, g.idioma]);
 
   const valor: Ctx = {
     ...g,
@@ -56,6 +58,7 @@ export function EstadoProvider({ children }: { children: ReactNode }) {
     t: TEXTOS[g.idioma],
     catalogo,
     recetas,
+    lugares,
     receta: (slug) => recetas.find((r) => r.slug === slug),
     cambiar,
     alternarFavorito: (s) => setG((x) => ({ ...x, favoritos: alternar(x.favoritos, s) })),

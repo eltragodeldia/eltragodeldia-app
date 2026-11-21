@@ -23,6 +23,8 @@ export const TEXTOS = {
     cuenta: { titulo: 'Cuenta', entrar: 'Entra con tu correo', entrarTexto: 'Sin contraseña: te mando un enlace al correo. Así tus favoritas, Mi bar y la lista te siguen a cualquier teléfono.', pronto: 'Las cuentas llegan en la próxima versión de prueba. Por ahora todo se guarda en este teléfono.', aviso: 'Trago del día a las 5:00 p. m.', idioma: 'Idioma', medidas: 'Medidas', privacidad: 'Privacidad', terminos: 'Términos de uso', consumo: 'Consumo responsable', version: 'Versión' },
     edad: { frase: 'Se prepara, se prueba… ¡Delicioso!', pregunta: '¿Tienes 21 años o más?', texto: 'Esta app habla de alcohol. Para entrar necesitas tener la edad legal para tomar.', si: 'Sí, tengo 21 o más', no: 'No', noTitulo: 'Te esperamos más adelante', noTexto: 'Este contenido es solo para mayores de 21 años.', legal: 'Disfruta con responsabilidad. Nunca manejes si tomaste. Al entrar aceptas los términos de uso y la política de privacidad.' },
     sinConexion: 'Sin conexión: te muestro lo último que guardé en este teléfono.',
+    mapa: { titulo: 'Bares que valen el viaje', lead: 'Los lugares donde he ido y volvería, con lo que pedir en cada uno.', todos: 'Todos', lugares: (n: number) => `${n} ${n === 1 ? 'lugar' : 'lugares'}`, ninguno: 'No hay lugares con ese filtro.', buscar: 'Busca un lugar o un barrio', cerca: 'Cerca de mí',
+      pedir: 'Qué pedir', porque: 'Por qué ir', ocasion: 'Para cuándo', horario: 'Horario', direccion: 'Dirección', precio: 'Precio', llegar: 'Cómo llegar', instagram: 'Instagram', video: 'Ver el video', verFicha: 'Ver el lugar', volver: 'Volver', sinMapa: 'El mapa se ve en la app del teléfono.' },
   },
   en: {
     pestanas: { hoy: 'Home', recetas: 'Recipes', mibar: 'My bar', guardadas: 'Saved', cuenta: 'Account' },
@@ -46,10 +48,12 @@ export const TEXTOS = {
     cuenta: { titulo: 'Account', entrar: 'Sign in with your email', entrarTexto: 'No password: I send you a link by email. Your favorites, My bar and list follow you to any phone.', pronto: 'Accounts arrive in the next test version. For now everything is saved on this phone.', aviso: 'Drink of the day at 5:00 p.m.', idioma: 'Language', medidas: 'Measurements', privacidad: 'Privacy', terminos: 'Terms of use', consumo: 'Responsible drinking', version: 'Version' },
     edad: { frase: "There's always something delicious here.", pregunta: 'Are you 21 or older?', texto: 'This app talks about alcohol. You need to be of legal drinking age to come in.', si: "Yes, I'm 21 or older", no: 'No', noTitulo: 'See you later', noTexto: 'This content is only for adults 21 and over.', legal: 'Drink responsibly. Never drink and drive. By entering you accept the terms of use and the privacy policy.' },
     sinConexion: 'Offline: showing the last copy saved on this phone.',
+    mapa: { titulo: 'Bars worth the trip', lead: 'Places I have been and would go back to, with what to order at each one.', todos: 'All', lugares: (n: number) => `${n} ${n === 1 ? 'place' : 'places'}`, ninguno: 'No places match that filter.', buscar: 'Search a place or a neighborhood', cerca: 'Near me',
+      pedir: 'What to order', porque: 'Why go', ocasion: 'Best for', horario: 'Hours', direccion: 'Address', precio: 'Price', llegar: 'Directions', instagram: 'Instagram', video: 'Watch the video', verFicha: 'See the place', volver: 'Back', sinMapa: 'The map shows in the phone app.' },
   },
 } as const;
 
 export type Textos = (typeof TEXTOS)[Idioma];
 
-const DESTILADOS_EN: Record<string, string> = { Ron: 'Rum', Whisky: 'Whiskey', Licores: 'Liqueurs', 'Sin alcohol': 'Non-alcoholic', 'Fácil': 'Easy', Intermedia: 'Intermediate', Avanzada: 'Advanced' };
+const DESTILADOS_EN: Record<string, string> = { 'Coctelería': 'Cocktail bar', Restaurante: 'Restaurant', Hotel: 'Hotel', 'Coctelería de autor': 'Signature cocktails', Speakeasy: 'Speakeasy', Rooftop: 'Rooftop', 'Clásicos cubanos': 'Cuban classics', 'Para una cita': 'Date night', 'Primera vez en Miami': 'First time in Miami', 'Íconos de Miami': 'Miami icons', 'Música en vivo': 'Live music', 'Happy hour': 'Happy hour', 'Lo nuevo': 'New openings', Ron: 'Rum', Whisky: 'Whiskey', Licores: 'Liqueurs', 'Sin alcohol': 'Non-alcoholic', 'Fácil': 'Easy', Intermedia: 'Intermediate', Avanzada: 'Advanced' };
 export const valor = (t: string, idioma: Idioma) => (idioma === 'en' ? DESTILADOS_EN[t] ?? t : t);
