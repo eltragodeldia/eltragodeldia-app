@@ -5,6 +5,7 @@ import { pedirPermiso } from '../../lib/aviso';
 import { useScrollToTop } from 'expo-router';
 import { useRef, type ComponentRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { TarjetaCuenta } from '../../components/TarjetaCuenta';
 import { Icono, Texto, Titular } from '../../components/ui';
 import { useEstado } from '../../lib/estado';
 import { color, SITIO } from '../../lib/tema';
@@ -45,13 +46,9 @@ export default function Cuenta() {
   );
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
-      <ScrollView ref={ref} contentContainerStyle={{ padding: 20, gap: 16 }}>
+      <ScrollView ref={ref} keyboardShouldPersistTaps="handled" contentContainerStyle={{ padding: 20, gap: 16 }}>
         <Titular>{t.cuenta.titulo}</Titular>
-        <View style={{ backgroundColor: color.cassis, borderRadius: 22, padding: 18, gap: 6 }}>
-          <Texto peso="black" tam={17} tono={color.crema}>{t.cuenta.entrar}</Texto>
-          <Texto tam={14} tono={color.beige}>{t.cuenta.entrarTexto}</Texto>
-          <Texto tam={13} peso="bold" tono={color.wasabi}>{t.cuenta.pronto}</Texto>
-        </View>
+        <TarjetaCuenta />
         <View>
           {fila(t.cuenta.aviso, <Switch value={aviso} onValueChange={cambiarAviso} trackColor={{ true: color.cassis, false: color.beige }} thumbColor={aviso ? color.wasabi : color.blanco} accessibilityLabel={t.cuenta.aviso} />)}
           {fila(t.cuenta.idioma, seg([['es', 'Español'], ['en', 'English']], idioma, (v) => cambiar({ idioma: v })))}
