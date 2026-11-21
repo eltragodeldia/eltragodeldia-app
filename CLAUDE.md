@@ -32,7 +32,8 @@ App de El Trago del Día para iPhone y Android, hecha con Expo (SDK 58) y Expo R
 - Las credenciales de Apple y Google las carga Yunior en expo.dev; Claude no las ve. iOS ya tiene en Expo: certificado de distribución, perfil, llave de notificaciones y llave de App Store Connect (rol App Manager).
 - Envío automático (`.eas/workflows/enviar-a-testflight.yml`): cada push a `main` (o sea, cada PR integrado) calcula el fingerprint de la parte nativa. Si ya existe una versión de iPhone con ese fingerprint, publica una actualización rápida (expo-updates, canal `production`) que llega sola a la app instalada; si no existe, arma una versión nueva y la manda a TestFlight. Requiere el repositorio conectado a GitHub en expo.dev.
 - Actualizaciones rápidas: `expo-updates` con `runtimeVersion` por `fingerprint` y `updates.url` del proyecto. Solo llevan JavaScript e imágenes; un paquete nativo nuevo, un permiso o un cambio de ícono o de `app.json` obliga a una versión nueva (el workflow lo detecta solo).
-- Claude tiene el conector de Expo: puede ver versiones, leer errores, correr y validar workflows.
+- `eas.json` lleva `submit.production.ios.ascAppId` (6837599358, la app en App Store Connect): sin él el envío automático no sabe a qué app subir.
+- Claude tiene el conector de Expo: puede ver versiones, leer errores, correr y validar workflows, y mandar una versión ya armada a TestFlight (`build_submit`).
 
 ## Comandos
 - `npx expo start` para desarrollar; `npx tsc --noEmit` para revisar tipos.
