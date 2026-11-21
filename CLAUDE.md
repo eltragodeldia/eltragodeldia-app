@@ -20,8 +20,8 @@ App de El Trago del Día para iPhone y Android, hecha con Expo (SDK 58) y Expo R
 
 ## Cómo está hecha
 - Rutas en `src/app/` (Expo Router). `bienvenida.tsx` es la verificación de 21+; el resto está protegido con `Stack.Protected` hasta confirmar la edad.
-- Pestañas `(tabs)`: Hoy, Recetas, Mi bar, Guardadas, Cuenta. Además `receta/[slug]` y `preparar/[slug]` (paso a paso con temporizador, pantalla encendida y vibración).
-- Datos: `src/lib/datos.ts` lee las recetas publicadas de Supabase, guarda la última copia en el teléfono para usarla sin conexión y, si no hay base configurada, usa `src/lib/demo.json` (las recetas de ejemplo del sitio).
+- Pestañas `(tabs)`: Inicio, Recetas, Mi bar, Guardadas, Cuenta. Inicio (`(tabs)/index.tsx`) reúne lo principal: saludo, el trago de hoy, atajos (recetas, Mi bar, favoritas, lista), "Ya los puedes hacer" o invitación a Mi bar, por destilado (abre Recetas filtrada con `?d=`), recién llegadas, modo preparar, en 5 minutos o menos, artículos, mapa de bares y colecciones (estos tres abren la web dentro de la app). Tocar la pestaña en la que ya estás vuelve arriba (`useScrollToTop` en cada pestaña). Guardadas abre la lista con `?pestana=lista`. Además `receta/[slug]` y `preparar/[slug]` (paso a paso con temporizador, pantalla encendida y vibración).
+- Datos: `src/lib/datos.ts` lee las recetas y los artículos publicados de Supabase, guarda la última copia en el teléfono para usarla sin conexión y, si no hay base configurada, usa `src/lib/demo.json` (las recetas de ejemplo del sitio).
 - Estado del teléfono (edad, idioma, medidas, aviso, favoritas, Mi bar, lista) en `src/lib/estado.tsx`, guardado con AsyncStorage. Las cuentas (enlace al correo) y la sincronización con `app_*` (`db/016` del sitio) van en la siguiente versión.
 - `src/lib/compartido/` está copiado del sitio (Mi bar, próxima botella, medidas, tipos). Si cambia en el sitio, se copia igual aquí para que los dos den el mismo resultado.
 - Ilustraciones: las mismas del sitio, desde `https://eltragodeldia.com/ilustraciones/<slug>.svg?v=3`.

@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useLocalSearchParams, useScrollToTop } from 'expo-router';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { FlatList, ScrollView, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TarjetaReceta } from '../../components/TarjetaReceta';
@@ -13,7 +14,11 @@ const sinAcentos = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toL
 export default function Recetas() {
   const { t, idioma, recetas } = useEstado();
   const [q, setQ] = useState('');
-  const [dest, setDest] = useState<string | null>(null);
+  const { d } = useLocalSearchParams<{ d?: string }>();
+  const [dest, setDest] = useState<string | null>(d ?? null);
+  useEffect(() => { if (d) setDest(d); }, [d]);
+  const ref = useRef<FlatList<(typeof recetas)[number]>>(null);
+  useScrollToTop(ref);
   const presentes = DESTILADOS.filter((d) => recetas.some((r) => r.destilado === d));
   const lista = useMemo(() => {
     const b = sinAcentos(q.trim());
@@ -23,6 +28,7 @@ export default function Recetas() {
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
       <FlatList
+        ref={ref}
         data={lista}
         keyExtractor={(r) => r.slug}
         numColumns={2}

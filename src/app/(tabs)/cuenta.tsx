@@ -1,12 +1,16 @@
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
 import { Pressable, ScrollView, Switch, View } from 'react-native';
+import { useScrollToTop } from 'expo-router';
+import { useRef, type ComponentRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icono, Texto, Titular } from '../../components/ui';
 import { useEstado } from '../../lib/estado';
 import { color, SITIO } from '../../lib/tema';
 
 export default function Cuenta() {
+  const ref = useRef<ComponentRef<typeof ScrollView>>(null);
+  useScrollToTop(ref);
   const { t, idioma, unidad, aviso, cambiar } = useEstado();
   const en = idioma === 'en';
   const fila = (texto: string, derecha: React.ReactNode) => (
@@ -33,7 +37,7 @@ export default function Cuenta() {
   );
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }}>
+      <ScrollView ref={ref} contentContainerStyle={{ padding: 20, gap: 16 }}>
         <Titular>{t.cuenta.titulo}</Titular>
         <View style={{ backgroundColor: color.cassis, borderRadius: 22, padding: 18, gap: 6 }}>
           <Texto peso="black" tam={17} tono={color.crema}>{t.cuenta.entrar}</Texto>

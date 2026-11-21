@@ -3,29 +3,31 @@ import type { Receta } from './compartido/tipos';
 import type { Idioma } from './compartido/idioma';
 import { supabase } from './supabase';
 import demo from './demo.json';
+import demoArticulos from './demo-articulos.json';
 
-const CLAVE = 'etd-catalogo-v1';
+export interface ArticuloApp { slug: string; titulo: string; resumen: string | null; titulo_en: string | null; resumen_en: string | null; foto_url: string | null; publicado_en: string | null; categoria: string | null }
 
-export interface Catalogo { recetas: Receta[]; actualizado: number; origen: 'red' | 'guardado' | 'demo' }
+const CLAVE = 'etd-catalogo-v2';
+const DEMO = (): Catalogo => ({ recetas: demo as unknown as Receta[], articulos: demoArticulos as ArticuloApp[], actualizado: Date.now(), origen: 'demo' });
+
+export interface Catalogo { recetas: Receta[]; articulos: ArticuloApp[]; actualizado: number; origen: 'red' | 'guardado' | 'demo' }
 
 /** Recetas publicadas: primero la red; sin conexión, la última copia guardada; sin base configurada, las de ejemplo. */
 export async function cargarCatalogo(): Promise<Catalogo> {
-  if (!supabase) return { recetas: demo as unknown as Receta[], actualizado: Date.now(), origen: 'demo' };
+  if (!supabase) return DEMO();
   try {
-    const { data, error } = await supabase
-      .from('recetas')
-      .select('*')
-      .eq('publicado', true)
-      .eq('exclusivo', false)
-      .order('publicado_en', { ascending: false });
-    if (error) throw error;
-    const cat: Catalogo = { recetas: (data ?? []) as Receta[], actualizado: Date.now(), origen: 'red' };
+    const [rec, art] = await Promise.all([
+      supabase.from('recetas').select('*').eq('publicado', true).eq('exclusivo', false).order('publicado_en', { ascending: false }),
+      supabase.from('articulos').select('slug,titulo,resumen,titulo_en,resumen_en,foto_url,publicado_en,categoria').eq('publicado', true).eq('exclusivo', false).order('publicado_en', { ascending: false }),
+    ]);
+    if (rec.error) throw rec.error;
+    const cat: Catalogo = { recetas: (rec.data ?? []) as Receta[], articulos: (art.data ?? []) as ArticuloApp[], actualizado: Date.now(), origen: 'red' };
     AsyncStorage.setItem(CLAVE, JSON.stringify(cat)).catch(() => {});
     return cat;
   } catch {
     const guardado = await AsyncStorage.getItem(CLAVE).catch(() => null);
-    if (guardado) return { ...(JSON.parse(guardado) as Catalogo), origen: 'guardado' };
-    return { recetas: demo as unknown as Receta[], actualizado: Date.now(), origen: 'demo' };
+    if (guardado) { const g = JSON.parse(guardado) as Catalogo; return { ...g, articulos: g.articulos ?? [], origen: 'guardado' }; }
+    return DEMO();
   }
 }
 

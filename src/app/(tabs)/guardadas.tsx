@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useLocalSearchParams, useScrollToTop } from 'expo-router';
+import { useEffect, useMemo, useRef, useState, type ComponentRef } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FilaReceta } from '../../components/TarjetaReceta';
@@ -13,7 +14,11 @@ const clave = (n: string) => n.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerC
 
 export default function Guardadas() {
   const { t, idioma, unidad, favoritos, alternarFavorito, lista, receta, mibar, hechos, cambiar, quitarDeLista } = useEstado();
-  const [pestana, setPestana] = useState<'fav' | 'lista'>('fav');
+  const { pestana: inicial } = useLocalSearchParams<{ pestana?: string }>();
+  const [pestana, setPestana] = useState<'fav' | 'lista'>(inicial === 'lista' ? 'lista' : 'fav');
+  useEffect(() => { if (inicial === 'lista' || inicial === 'fav') setPestana(inicial); }, [inicial]);
+  const ref = useRef<ComponentRef<typeof ScrollView>>(null);
+  useScrollToTop(ref);
   const favs = favoritos.map(receta).filter((r): r is NonNullable<typeof r> => Boolean(r));
 
   const items = useMemo(() => {
@@ -42,7 +47,7 @@ export default function Guardadas() {
 
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
-      <ScrollView contentContainerStyle={{ padding: 20, gap: 14 }}>
+      <ScrollView ref={ref} contentContainerStyle={{ padding: 20, gap: 14 }}>
         <Titular>{t.guardadas.titulo}</Titular>
         <View accessibilityRole="tablist" style={{ flexDirection: 'row', backgroundColor: color.beige, borderRadius: 999, padding: 4 }}>
           {seg('fav', t.guardadas.favoritas)}{seg('lista', t.guardadas.lista)}
