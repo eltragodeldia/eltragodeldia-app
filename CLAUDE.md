@@ -27,7 +27,7 @@ App de El Trago del Día para iPhone y Android, hecha con Expo (SDK 58) y Expo R
 - Ilustraciones: las mismas del sitio, desde `https://eltragodeldia.com/ilustraciones/<slug>.svg?v=3`.
 
 ## Expo (EAS)
-- Proyecto de Expo: slug `eltragodeldia`, ID `288c11fb-9c18-40cb-b791-74d2837efe0c` (en `app.json`), en la cuenta de Expo de contact@eltragodeldia.com.
+- Proyecto de Expo: slug `eltragodeldia`, ID `288c11fb-9c18-40cb-b791-74d2837efe0c` (en `app.json`), en la organización de Expo `eltragodeldias-team` (usuario `eltragodeldia`, contact@eltragodeldia.com).
 - `eas.json`: perfiles `development` y `preview` (pruebas internas, base `etd-desarrollo`) y `production` (tiendas, base `etd-produccion`). Las variables `EXPO_PUBLIC_SUPABASE_*` de cada uno se configuran en expo.dev (Environment variables), nunca en el código.
 - Las credenciales de Apple y Google las carga Yunior en expo.dev; Claude no las ve.
 
