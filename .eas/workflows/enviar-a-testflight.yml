@@ -1,0 +1,53 @@
+# Cada vez que se integra un cambio en main:
+# - Si la parte nativa de la app no cambió (mismo fingerprint que una versión ya armada),
+#   se publica una actualización rápida al canal production: llega sola a la app instalada.
+# - Si cambió (paquetes nuevos, permisos, íconos, app.json), se arma una versión nueva
+#   de iPhone y se manda a TestFlight.
+# Android se agrega cuando exista la cuenta de Google Play.
+name: Enviar a TestFlight
+
+on:
+  push:
+    branches: ['main']
+
+jobs:
+  fingerprint:
+    name: Calcular fingerprint
+    type: fingerprint
+    environment: production
+
+  get_build:
+    name: Buscar versión compatible de iPhone
+    needs: [fingerprint]
+    type: get-build
+    params:
+      platform: ios
+      profile: production
+      fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
+
+  update:
+    name: Publicar actualización rápida
+    needs: [get_build]
+    if: ${{ needs.get_build.outputs.build_id }}
+    type: update
+    environment: production
+    params:
+      platform: ios
+      channel: production
+
+  build:
+    name: Armar versión de iPhone
+    needs: [get_build]
+    if: ${{ !needs.get_build.outputs.build_id }}
+    type: build
+    params:
+      platform: ios
+      profile: production
+
+  submit:
+    name: Mandar a TestFlight
+    needs: [build]
+    type: submit
+    params:
+      build_id: ${{ needs.build.outputs.build_id }}
+      profile: production
