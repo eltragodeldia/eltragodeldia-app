@@ -1,11 +1,12 @@
 import { Image } from 'expo-image';
 import { router, useScrollToTop, type Href } from 'expo-router';
-import { useMemo, useRef, type ComponentRef, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ComponentRef, type ReactNode } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BotonIcono, Boton, Chip, Icono, Ilustracion, Texto, Titular } from '../../components/ui';
 import { necesitaDe } from '../../lib/compartido/mibar';
 import { DESTILADOS, type Receta } from '../../lib/compartido/tipos';
+import { pedirPermiso, permiso } from '../../lib/aviso';
 import { tragoDelDia } from '../../lib/datos';
 import { useEstado } from '../../lib/estado';
 import { valor } from '../../lib/textos';
@@ -80,7 +81,15 @@ function Tarjeta({ fondo, titulo, texto, boton, onPress, icono }: { fondo: strin
 }
 
 export default function Inicio() {
-  const { t, idioma, recetas, catalogo, favoritos, alternarFavorito, mibar, lista } = useEstado();
+  const { t, idioma, recetas, catalogo, favoritos, alternarFavorito, mibar, lista, aviso, avisoPreguntado, cambiar } = useEstado();
+  // Pregunta por el aviso diario una sola vez, aquí y con contexto, nunca al abrir la app.
+  const [preguntarAviso, setPreguntarAviso] = useState(false);
+  useEffect(() => { if (aviso && !avisoPreguntado) permiso().then((p) => setPreguntarAviso(p === 'sin-preguntar')).catch(() => {}); }, [aviso, avisoPreguntado]);
+  const responderAviso = async (si: boolean) => {
+    setPreguntarAviso(false);
+    const ok = si ? await pedirPermiso() : false;
+    cambiar({ avisoPreguntado: true, aviso: ok });
+  };
   const h = t.hoy;
   const ref = useRef<ComponentRef<typeof ScrollView>>(null);
   useScrollToTop(ref);
@@ -130,6 +139,20 @@ export default function Inicio() {
             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
               <Boton variante="wasabi" href={`/receta/${hoy.slug}`} estilo={{ flex: 1 }}>{h.preparar}</Boton>
               <BotonIcono nombre="corazon" claro etiqueta={favoritos.includes(hoy.slug) ? t.receta.guardada : t.receta.guardar} activo={favoritos.includes(hoy.slug)} onPress={() => alternarFavorito(hoy.slug)} />
+            </View>
+          </View>
+        ) : null}
+
+        {preguntarAviso ? (
+          <View style={{ marginHorizontal: 20, backgroundColor: color.wasabi, borderRadius: 22, padding: 18, gap: 10 }}>
+            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+              <Icono nombre="campana" tam={22} />
+              <Titular tam={18} estilo={{ flex: 1 }}>{h.avisoTitulo}</Titular>
+            </View>
+            <Texto tam={14}>{h.avisoTexto}</Texto>
+            <View style={{ flexDirection: 'row', gap: 10 }}>
+              <Boton variante="cassis" alto={46} estilo={{ flex: 1 }} onPress={() => responderAviso(true)}>{h.avisoSi}</Boton>
+              <Boton variante="borde" alto={46} onPress={() => responderAviso(false)}>{h.avisoAhoraNo}</Boton>
             </View>
           </View>
         ) : null}

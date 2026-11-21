@@ -1,6 +1,7 @@
 import Constants from 'expo-constants';
 import * as WebBrowser from 'expo-web-browser';
-import { Pressable, ScrollView, Switch, View } from 'react-native';
+import { Alert, Linking, Pressable, ScrollView, Switch, View } from 'react-native';
+import { pedirPermiso } from '../../lib/aviso';
 import { useScrollToTop } from 'expo-router';
 import { useRef, type ComponentRef } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -12,6 +13,13 @@ export default function Cuenta() {
   const ref = useRef<ComponentRef<typeof ScrollView>>(null);
   useScrollToTop(ref);
   const { t, idioma, unidad, aviso, cambiar } = useEstado();
+  // Al encender el aviso se pide permiso; si el teléfono lo tiene apagado, se explica cómo activarlo.
+  const cambiarAviso = async (v: boolean) => {
+    if (!v) return cambiar({ aviso: false, avisoPreguntado: true });
+    const ok = await pedirPermiso();
+    cambiar({ aviso: ok, avisoPreguntado: true });
+    if (!ok) Alert.alert(t.cuenta.aviso, t.cuenta.avisoNo, [{ text: t.cuenta.ahoraNo, style: 'cancel' }, { text: t.cuenta.ajustes, onPress: () => Linking.openSettings() }]);
+  };
   const en = idioma === 'en';
   const fila = (texto: string, derecha: React.ReactNode) => (
     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', minHeight: 56, borderBottomWidth: 1, borderBottomColor: color.beige, gap: 12 }}>
@@ -45,7 +53,7 @@ export default function Cuenta() {
           <Texto tam={13} peso="bold" tono={color.wasabi}>{t.cuenta.pronto}</Texto>
         </View>
         <View>
-          {fila(t.cuenta.aviso, <Switch value={aviso} onValueChange={(v) => cambiar({ aviso: v })} trackColor={{ true: color.cassis, false: color.beige }} thumbColor={aviso ? color.wasabi : color.blanco} accessibilityLabel={t.cuenta.aviso} />)}
+          {fila(t.cuenta.aviso, <Switch value={aviso} onValueChange={cambiarAviso} trackColor={{ true: color.cassis, false: color.beige }} thumbColor={aviso ? color.wasabi : color.blanco} accessibilityLabel={t.cuenta.aviso} />)}
           {fila(t.cuenta.idioma, seg([['es', 'Español'], ['en', 'English']], idioma, (v) => cambiar({ idioma: v })))}
           {fila(t.cuenta.medidas, seg([['oz', 'oz'], ['ml', 'ml']], unidad, (v) => cambiar({ unidad: v })))}
         </View>

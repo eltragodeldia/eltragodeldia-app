@@ -3,16 +3,17 @@ import { getLocales } from 'expo-localization';
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { Idioma } from './compartido/idioma';
 import type { Lugar, Receta } from './compartido/tipos';
+import { programarAvisos } from './aviso';
 import { cargarCatalogo, enIdioma, lugarEnIdioma, type Catalogo } from './datos';
 import { TEXTOS, type Textos } from './textos';
 
 // Todo se guarda en el teléfono. Con cuenta (próxima versión) se sincroniza con app_favoritos, app_mibar, app_lista y app_ajustes.
 export interface EnLista { s: string; p: number }
-interface Guardado { edad: 'si' | 'no' | null; idioma: Idioma; unidad: 'oz' | 'ml'; aviso: boolean; favoritos: string[]; mibar: string[]; lista: EnLista[]; hechos: string[] }
+interface Guardado { edad: 'si' | 'no' | null; idioma: Idioma; unidad: 'oz' | 'ml'; aviso: boolean; avisoPreguntado: boolean; favoritos: string[]; mibar: string[]; lista: EnLista[]; hechos: string[] }
 
 const CLAVE = 'etd-estado-v1';
 const idiomaTelefono = (): Idioma => (getLocales()[0]?.languageCode === 'en' ? 'en' : 'es');
-const inicial = (): Guardado => ({ edad: null, idioma: idiomaTelefono(), unidad: 'oz', aviso: true, favoritos: [], mibar: [], lista: [], hechos: [] });
+const inicial = (): Guardado => ({ edad: null, idioma: idiomaTelefono(), unidad: 'oz', aviso: true, avisoPreguntado: false, favoritos: [], mibar: [], lista: [], hechos: [] });
 
 interface Ctx extends Guardado {
   listo: boolean;
@@ -50,6 +51,10 @@ export function EstadoProvider({ children }: { children: ReactNode }) {
   const alternar = (lista: string[], v: string) => (lista.includes(v) ? lista.filter((x) => x !== v) : [v, ...lista]);
 
   const recetas = useMemo(() => (catalogo?.recetas ?? []).map((r) => enIdioma(r, g.idioma)), [catalogo, g.idioma]);
+  // El aviso diario se vuelve a programar al abrir la app y cada vez que cambia el catálogo, el idioma o el interruptor.
+  useEffect(() => {
+    if (listo && g.edad === 'si' && catalogo) programarAvisos(recetas, g.idioma, g.aviso).catch(() => {});
+  }, [listo, g.edad, g.aviso, g.idioma, catalogo, recetas]);
   const lugares = useMemo(() => (catalogo?.lugares ?? []).map((l) => lugarEnIdioma(l, g.idioma)), [catalogo, g.idioma]);
 
   const valor: Ctx = {
