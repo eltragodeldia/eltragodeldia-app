@@ -1,0 +1,456 @@
+[
+ {
+  "id": "espresso-martini",
+  "dificultad": "Fácil",
+  "tiempo_min": 5,
+  "vaso": "Copa coupé",
+  "tecnica": "Agitado",
+  "ocasion": "Sobremesa",
+  "resumen": "El que pides para seguir la noche. La receta es sencilla; el secreto está en la espuma.",
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 1.5,
+    "unidad": "oz",
+    "ingrediente": "Vodka"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Espresso recién hecho, tibio"
+   },
+   {
+    "cantidad": 0.75,
+    "unidad": "oz",
+    "ingrediente": "Licor de café"
+   },
+   {
+    "cantidad": 0.25,
+    "unidad": "oz",
+    "ingrediente": "Jarabe simple (opcional)"
+   },
+   {
+    "cantidad": 3,
+    "unidad": "unidad",
+    "ingrediente": "Granos de café para decorar"
+   }
+  ],
+  "pasos": [
+   "Prepara el espresso y déjalo un minuto para que baje la temperatura.",
+   "Llena la copa con hielo y agua para enfriarla mientras preparas el resto.",
+   "En la coctelera sirve el vodka, el espresso, el licor de café y el jarabe si lo quieres más dulce.",
+   "Llena la coctelera de hielo hasta arriba, ciérrala bien y agita fuerte durante quince segundos.",
+   "Vacía la copa y cuela con doble colador para que la espuma quede lisa.",
+   "Pon los tres granos de café encima."
+  ],
+  "error_comun": "Agitar con miedo. La espuma sale del aire y del hielo chocando contra el café: coctelera llena de hielo y quince segundos con ganas.",
+  "foto_url": null,
+  "video_url": "https://www.youtube.com/shorts/_pE2hkOEDX0",
+  "destacada": true,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "espresso-martini",
+  "nombre": "Espresso Martini",
+  "destilado": "Vodka",
+  "nombre_en": "Espresso Martini",
+  "resumen_en": "The one you order to keep the night going. The recipe is simple; the secret is the foam.",
+  "vaso_en": "Coupe",
+  "tecnica_en": "Shaken",
+  "ocasion_en": "After dinner",
+  "ingredientes_en": [
+   "Vodka",
+   "Fresh espresso, warm",
+   "Coffee liqueur",
+   "Simple syrup (optional)",
+   "Coffee beans to garnish"
+  ],
+  "pasos_en": [
+   "Pull the espresso and let it cool for a minute.",
+   "Fill the glass with ice and water to chill it.",
+   "Add the vodka, espresso, coffee liqueur and syrup to the shaker.",
+   "Fill the shaker with ice and shake hard for fifteen seconds.",
+   "Empty the glass and double strain.",
+   "Top with three coffee beans."
+  ],
+  "error_comun_en": "Shaking timidly. The foam comes from air and ice hitting the coffee: a full shaker and fifteen hard seconds."
+ },
+ {
+  "id": "margarita",
+  "dificultad": "Fácil",
+  "tiempo_min": 4,
+  "vaso": "Copa margarita o vaso corto",
+  "tecnica": "Agitado",
+  "ocasion": "Para recibir",
+  "resumen": "Tres ingredientes y muchas formas de arruinarla. Esta es la versión que sale bien siempre.",
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Tequila blanco"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Jugo de limón recién exprimido"
+   },
+   {
+    "cantidad": 0.75,
+    "unidad": "oz",
+    "ingrediente": "Licor de naranja"
+   },
+   {
+    "cantidad": 0.25,
+    "unidad": "oz",
+    "ingrediente": "Jarabe de agave (opcional)"
+   },
+   {
+    "cantidad": null,
+    "unidad": "al gusto",
+    "ingrediente": "Sal para el borde"
+   }
+  ],
+  "pasos": [
+   "Pasa un gajo de limón por la mitad del borde del vaso y escárchalo con sal.",
+   "Sirve el tequila, el jugo de limón, el licor de naranja y el agave en la coctelera.",
+   "Agrega hielo y agita fuerte unos doce segundos.",
+   "Cuela sobre hielo fresco o directo a la copa fría."
+  ],
+  "error_comun": "Usar jugo de limón de botella. El limón recién exprimido es la mitad del trago.",
+  "foto_url": null,
+  "video_url": "https://www.youtube.com/shorts/EJEMPLO456",
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "margarita",
+  "nombre": "Margarita",
+  "destilado": "Tequila"
+ },
+ {
+  "id": "paloma",
+  "dificultad": "Fácil",
+  "tiempo_min": 3,
+  "vaso": "Vaso alto",
+  "tecnica": "Directo",
+  "ocasion": "Playa y piscina",
+  "resumen": "Toronja, sal y nada de complicaciones.",
+  "historia": "Texto de ejemplo, primer párrafo de la historia.\n\nSegundo párrafo de ejemplo, para comprobar que se separan bien.",
+  "ingredientes": [
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Tequila blanco"
+   },
+   {
+    "cantidad": 0.5,
+    "unidad": "oz",
+    "ingrediente": "Jugo de lima"
+   },
+   {
+    "cantidad": null,
+    "unidad": "al gusto",
+    "ingrediente": "Una pizca de sal"
+   },
+   {
+    "cantidad": 4,
+    "unidad": "oz",
+    "ingrediente": "Refresco de toronja"
+   }
+  ],
+  "pasos": [
+   "Llena el vaso de hielo.",
+   "Sirve el tequila, el jugo de lima y la pizca de sal.",
+   "Completa con el refresco de toronja y revuelve una vez."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": null,
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "paloma",
+  "nombre": "Paloma",
+  "destilado": "Tequila"
+ },
+ {
+  "id": "negroni",
+  "dificultad": "Fácil",
+  "tiempo_min": 3,
+  "vaso": "Vaso corto",
+  "tecnica": "Revuelto",
+  "ocasion": "Antes de cenar",
+  "resumen": "Partes iguales, revuelto y con hielo de verdad.",
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Gin"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Campari"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Vermut rojo"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "unidad",
+    "ingrediente": "Piel de naranja"
+   }
+  ],
+  "pasos": [
+   "Sirve los tres en un vaso mezclador con hielo.",
+   "Revuelve unos veinte segundos.",
+   "Cuela sobre un cubo grande de hielo.",
+   "Exprime la piel de naranja encima y déjala dentro."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": "https://www.tiktok.com/@eltragodeldia/video/7300000000000000000",
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "negroni",
+  "nombre": "Negroni",
+  "destilado": "Gin"
+ },
+ {
+  "id": "mojito",
+  "dificultad": "Intermedia",
+  "tiempo_min": 5,
+  "vaso": "Vaso alto",
+  "tecnica": "Directo",
+  "ocasion": "Playa y piscina",
+  "resumen": null,
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Ron blanco"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Jugo de lima"
+   },
+   {
+    "cantidad": 0.75,
+    "unidad": "oz",
+    "ingrediente": "Jarabe simple"
+   },
+   {
+    "cantidad": 8,
+    "unidad": "hojas",
+    "ingrediente": "Menta fresca"
+   },
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Agua con gas"
+   }
+  ],
+  "pasos": [
+   "Presiona la menta suavemente con el jarabe, sin triturarla.",
+   "Agrega el ron y el jugo de lima.",
+   "Llena de hielo picado y revuelve.",
+   "Completa con agua con gas y decora con una rama de menta."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": null,
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "mojito",
+  "nombre": "Mojito",
+  "destilado": "Ron"
+ },
+ {
+  "id": "daiquiri",
+  "dificultad": "Fácil",
+  "tiempo_min": 4,
+  "vaso": "Copa coupé",
+  "tecnica": "Agitado",
+  "ocasion": "Clásico",
+  "resumen": null,
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Ron blanco"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "oz",
+    "ingrediente": "Jugo de lima"
+   },
+   {
+    "cantidad": 0.75,
+    "unidad": "oz",
+    "ingrediente": "Jarabe simple"
+   }
+  ],
+  "pasos": [
+   "Sirve todo en la coctelera con hielo.",
+   "Agita fuerte diez segundos.",
+   "Cuela con doble colador a una copa fría."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": null,
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "daiquiri",
+  "nombre": "Daiquirí",
+  "destilado": "Ron"
+ },
+ {
+  "id": "old-fashioned",
+  "dificultad": "Intermedia",
+  "tiempo_min": 4,
+  "vaso": "Vaso corto",
+  "tecnica": "Revuelto",
+  "ocasion": "Sobremesa",
+  "resumen": null,
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 2,
+    "unidad": "oz",
+    "ingrediente": "Bourbon"
+   },
+   {
+    "cantidad": 0.25,
+    "unidad": "oz",
+    "ingrediente": "Jarabe simple"
+   },
+   {
+    "cantidad": 2,
+    "unidad": "dash",
+    "ingrediente": "Amargo de Angostura"
+   },
+   {
+    "cantidad": 1,
+    "unidad": "unidad",
+    "ingrediente": "Piel de naranja"
+   }
+  ],
+  "pasos": [
+   "Sirve el jarabe y el amargo en el vaso mezclador.",
+   "Agrega el bourbon y hielo.",
+   "Revuelve treinta segundos.",
+   "Cuela sobre un cubo grande y perfuma con la piel de naranja."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": null,
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "old-fashioned",
+  "nombre": "Old Fashioned",
+  "destilado": "Whisky"
+ },
+ {
+  "id": "carajillo",
+  "dificultad": "Fácil",
+  "tiempo_min": 3,
+  "vaso": "Vaso corto",
+  "tecnica": "Agitado",
+  "ocasion": "Sobremesa",
+  "resumen": null,
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 1.5,
+    "unidad": "oz",
+    "ingrediente": "Licor 43"
+   },
+   {
+    "cantidad": 1.5,
+    "unidad": "oz",
+    "ingrediente": "Espresso recién hecho"
+   }
+  ],
+  "pasos": [
+   "Agita el licor y el espresso con hielo.",
+   "Cuela sobre hielo en vaso corto."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": "https://www.instagram.com/reel/EJEMPLO789/",
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "carajillo",
+  "nombre": "Carajillo",
+  "destilado": "Licores"
+ },
+ {
+  "id": "paloma-sin-alcohol",
+  "dificultad": "Fácil",
+  "tiempo_min": 3,
+  "vaso": "Vaso alto",
+  "tecnica": "Directo",
+  "ocasion": "Para todos",
+  "resumen": null,
+  "historia": null,
+  "ingredientes": [
+   {
+    "cantidad": 0.75,
+    "unidad": "oz",
+    "ingrediente": "Jugo de lima"
+   },
+   {
+    "cantidad": null,
+    "unidad": "al gusto",
+    "ingrediente": "Una pizca de sal"
+   },
+   {
+    "cantidad": 5,
+    "unidad": "oz",
+    "ingrediente": "Refresco de toronja"
+   }
+  ],
+  "pasos": [
+   "Llena el vaso de hielo.",
+   "Sirve el jugo de lima y la sal.",
+   "Completa con el refresco y revuelve una vez."
+  ],
+  "error_comun": null,
+  "foto_url": null,
+  "video_url": null,
+  "destacada": false,
+  "exclusivo": false,
+  "publicado": true,
+  "publicado_en": "2026-11-14T12:00:00Z",
+  "actualizado_en": "2026-11-14T12:00:00Z",
+  "slug": "paloma-sin-alcohol",
+  "nombre": "Paloma sin alcohol",
+  "destilado": "Sin alcohol"
+ }
+]
