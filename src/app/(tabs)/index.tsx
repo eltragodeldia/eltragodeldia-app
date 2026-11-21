@@ -1,6 +1,5 @@
 import { Image } from 'expo-image';
 import { router, useScrollToTop, type Href } from 'expo-router';
-import * as WebBrowser from 'expo-web-browser';
 import { useMemo, useRef, type ComponentRef, type ReactNode } from 'react';
 import { Pressable, ScrollView, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -86,7 +85,6 @@ export default function Inicio() {
   const ref = useRef<ComponentRef<typeof ScrollView>>(null);
   useScrollToTop(ref);
   const en = idioma === 'en';
-  const abrir = (ruta: string) => WebBrowser.openBrowserAsync(SITIO + ruta);
 
   const hoy = useMemo(() => tragoDelDia(recetas), [recetas]);
   const hora = new Date().getHours();
@@ -182,10 +180,10 @@ export default function Inicio() {
         ) : null}
 
         {articulos.length ? (
-          <Seccion titulo={h.leer} accion={h.verTodos} onAccion={() => abrir(en ? '/en/articles' : '/articulos')}>
+          <Seccion titulo={h.leer} accion={h.verTodos} onAccion={() => router.push('/articulos')}>
             <View style={{ paddingHorizontal: 20, gap: 10 }}>
               {articulos.map((a) => (
-                <Pressable key={a.slug} onPress={() => abrir(`${en ? '/en/articles/' : '/articulos/'}${a.slug}`)} accessibilityRole="link"
+                <Pressable key={a.slug} onPress={() => router.push({ pathname: '/articulo/[slug]', params: { slug: a.slug } })} accessibilityRole="link"
                   style={{ flexDirection: 'row', gap: 12, alignItems: 'center', backgroundColor: color.blanco, borderWidth: 1, borderColor: color.beige, borderRadius: 20, padding: 10 }}>
                   <Image source={{ uri: a.foto_url ?? `${SITIO}/portadas/articulos/${a.slug}.svg?v=2` }} style={{ width: 72, height: 72, borderRadius: 14, backgroundColor: color.beige }} contentFit="contain" accessibilityIgnoresInvertColors />
                   <View style={{ flex: 1, gap: 2 }}>
@@ -200,7 +198,7 @@ export default function Inicio() {
         ) : null}
 
         <Tarjeta fondo={color.verde} icono="mapa" titulo={h.bares} texto={h.baresSub} boton={h.baresBoton} onPress={() => router.push('/lugares')} />
-        <Tarjeta fondo={color.cassis} icono="libro" titulo={h.colecciones} texto={h.coleccionesSub} boton={h.coleccionesBoton} onPress={() => abrir(en ? '/en/collections' : '/colecciones')} />
+        <Tarjeta fondo={color.cassis} icono="libro" titulo={h.colecciones} texto={h.coleccionesSub} boton={h.coleccionesBoton} onPress={() => router.push('/colecciones')} />
 
         <Texto tam={12} tono={color.gris} estilo={{ textAlign: 'center', paddingHorizontal: 20 }}>{h.responsable}</Texto>
       </ScrollView>

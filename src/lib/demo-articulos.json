@@ -7,7 +7,9 @@
   "resumen_en": "Why freezer ice over-dilutes and what to do at home.",
   "foto_url": null,
   "publicado_en": "2026-11-14T12:00:00Z",
-  "categoria": "Técnica"
+  "categoria": "Técnica",
+  "contenido": "Artículo de ejemplo para la app.\n\n## Primera idea\n\nTexto de prueba con **negrita** y *cursiva*. Una lista:\n\n- Hielo grande\n- Vaso frío\n\n## Segunda idea\n\n> Una cita de ejemplo.\n\nMás texto de prueba con un [enlace](https://eltragodeldia.com).",
+  "contenido_en": "Sample article for the app.\n\n## First idea\n\nTest text."
  },
  {
   "slug": "tequila-o-mezcal",
@@ -15,6 +17,8 @@
   "resumen": "El agave, el horno y la tierra. Lo que cambia en el vaso.",
   "foto_url": null,
   "publicado_en": "2026-11-14T12:00:00Z",
-  "categoria": "Destilados"
+  "categoria": "Destilados",
+  "contenido": "Artículo de ejemplo para la app.\n\n## Primera idea\n\nTexto de prueba con **negrita** y *cursiva*. Una lista:\n\n- Hielo grande\n- Vaso frío\n\n## Segunda idea\n\n> Una cita de ejemplo.\n\nMás texto de prueba con un [enlace](https://eltragodeldia.com).",
+  "contenido_en": null
  }
 ]
