@@ -2,6 +2,8 @@
 
 Textos de la ficha de El Trago del Día en App Store Connect (app 6837599358). Si cambian aquí, se cambian igual allá.
 
+Capturas: `docs/capturas-app-store/`, a 1206 × 2622 (el tamaño que pide Apple para iPhone de 6.1" y 6.3"), 6 en español y 6 en inglés.
+
 ## Datos generales
 
 - Nombre: El Trago del Día
