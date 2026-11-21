@@ -1,20 +1,23 @@
 import { router, useLocalSearchParams } from 'expo-router';
 import * as WebBrowser from 'expo-web-browser';
-import { ScrollView, Share, View } from 'react-native';
+import { Pressable, ScrollView, Share, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Mapa } from '../../components/Mapa';
 import { Boton, BotonIcono, Etiqueta, Texto, Titular } from '../../components/ui';
 import { useEstado } from '../../lib/estado';
 import { COLOR_TIPO, comoLlegar } from '../../lib/lugares';
+import { articulosDeLugar } from '../../lib/compartido/relacionados';
+import { articuloEnIdioma } from '../../lib/datos';
 import { valor } from '../../lib/textos';
 import { color, SITIO } from '../../lib/tema';
 
 export default function LugarFicha() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
-  const { t, idioma, lugares } = useEstado();
+  const { t, idioma, lugares, catalogo } = useEstado();
   const m = t.mapa;
   const l = lugares.find((x) => x.slug === slug);
   if (!l) return <SafeAreaView style={{ flex: 1, backgroundColor: color.crema, padding: 20 }}><Texto>{m.ninguno}</Texto></SafeAreaView>;
+  const mencionan = articulosDeLugar(l.nombre, (catalogo?.articulos ?? []).filter((a) => idioma === 'es' || a.titulo_en).map((a) => articuloEnIdioma(a, idioma)));
   const url = `${SITIO}${idioma === 'en' ? '/en/places/' : '/lugares/'}${l.slug}`;
   const bloque = (titulo: string, texto: string | null) => texto ? (
     <View style={{ gap: 4 }}><Etiqueta>{titulo}</Etiqueta><Texto tam={16}>{texto}</Texto></View>
@@ -60,6 +63,17 @@ export default function LugarFicha() {
             {l.video_url ? <Boton variante="borde" onPress={() => WebBrowser.openBrowserAsync(l.video_url!)}>{m.video}</Boton> : null}
             {l.instagram_url ? <Boton variante="borde" onPress={() => WebBrowser.openBrowserAsync(l.instagram_url!)}>{m.instagram}</Boton> : null}
           </View>
+          {mencionan.length ? (
+            <View style={{ gap: 8, marginTop: 8 }}>
+              <Etiqueta>{t.leer.titulo}</Etiqueta>
+              {mencionan.map((a) => (
+                <Pressable key={a.slug} onPress={() => router.push({ pathname: '/articulo/[slug]', params: { slug: a.slug } })} accessibilityRole="link"
+                  style={{ backgroundColor: color.beige, borderRadius: 18, padding: 14 }}>
+                  <Texto tam={15} peso="black">{a.titulo}</Texto>
+                </Pressable>
+              ))}
+            </View>
+          ) : null}
         </View>
       </ScrollView>
     </SafeAreaView>

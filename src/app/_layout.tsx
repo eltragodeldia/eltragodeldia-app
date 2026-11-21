@@ -23,6 +23,10 @@ function Navegacion() {
         <Stack.Screen name="receta/[slug]" />
         <Stack.Screen name="lugares/index" />
         <Stack.Screen name="lugar/[slug]" />
+        <Stack.Screen name="articulos/index" />
+        <Stack.Screen name="articulo/[slug]" />
+        <Stack.Screen name="colecciones/index" />
+        <Stack.Screen name="coleccion/[slug]" />
         <Stack.Screen name="preparar/[slug]" options={{ presentation: 'fullScreenModal', contentStyle: { backgroundColor: color.cassis } }} />
       </Stack.Protected>
       <Stack.Protected guard={!adentro}>
