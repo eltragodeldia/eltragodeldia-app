@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "El Trago del Día",
+    "name": "El Trago del Dia",
     "slug": "eltragodeldia",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -13,7 +13,8 @@
         "usesNonExemptEncryption": false
       },
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "CFBundleDisplayName": "El Trago del Día"
       }
     },
     "android": {
@@ -42,7 +43,11 @@
           "imageWidth": 140
         }
       ],
-      "expo-web-browser"
+      "expo-web-browser",
+      [
+        "./plugins/nombre-android.js",
+        "El Trago del Día"
+      ]
     ],
     "scheme": "eltragodeldia",
     "backgroundColor": "#FDF6EC",
