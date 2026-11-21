@@ -29,9 +29,13 @@ App de El Trago del Día para iPhone y Android, hecha con Expo (SDK 58) y Expo R
 ## Expo (EAS)
 - Proyecto de Expo: slug `eltragodeldia`, ID `288c11fb-9c18-40cb-b791-74d2837efe0c` (en `app.json`), en la organización de Expo `eltragodeldias-team` (usuario `eltragodeldia`, contact@eltragodeldia.com).
 - `eas.json`: perfiles `development` y `preview` (pruebas internas, base `etd-desarrollo`) y `production` (tiendas, base `etd-produccion`). Las variables `EXPO_PUBLIC_SUPABASE_*` de cada uno se configuran en expo.dev (Environment variables), nunca en el código.
-- Las credenciales de Apple y Google las carga Yunior en expo.dev; Claude no las ve.
+- Las credenciales de Apple y Google las carga Yunior en expo.dev; Claude no las ve. iOS ya tiene en Expo: certificado de distribución, perfil, llave de notificaciones y llave de App Store Connect (rol App Manager).
+- Envío automático (`.eas/workflows/enviar-a-testflight.yml`): cada push a `main` (o sea, cada PR integrado) calcula el fingerprint de la parte nativa. Si ya existe una versión de iPhone con ese fingerprint, publica una actualización rápida (expo-updates, canal `production`) que llega sola a la app instalada; si no existe, arma una versión nueva y la manda a TestFlight. Requiere el repositorio conectado a GitHub en expo.dev.
+- Actualizaciones rápidas: `expo-updates` con `runtimeVersion` por `fingerprint` y `updates.url` del proyecto. Solo llevan JavaScript e imágenes; un paquete nativo nuevo, un permiso o un cambio de ícono o de `app.json` obliga a una versión nueva (el workflow lo detecta solo).
+- Claude tiene el conector de Expo: puede ver versiones, leer errores, correr y validar workflows.
 
 ## Comandos
 - `npx expo start` para desarrollar; `npx tsc --noEmit` para revisar tipos.
+- Ya no hace falta la Terminal de Yunior: el envío lo hace el workflow. Si hiciera falta a mano, `EAS_NO_VCS=1 npx testflight` desde una copia del código.
 - En esta sesión de Claude la API de Expo no responde: instalar paquetes con `EXPO_OFFLINE=1 npx expo install <paquete>`.
 - Prueba en web: `EXPO_OFFLINE=1 npx expo export -p web` y servir `dist`.
