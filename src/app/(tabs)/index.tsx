@@ -199,7 +199,7 @@ export default function Inicio() {
           </Seccion>
         ) : null}
 
-        <Tarjeta fondo={color.verde} icono="mapa" titulo={h.bares} texto={h.baresSub} boton={h.baresBoton} onPress={() => abrir(en ? '/en/map' : '/mapa')} />
+        <Tarjeta fondo={color.verde} icono="mapa" titulo={h.bares} texto={h.baresSub} boton={h.baresBoton} onPress={() => router.push('/lugares')} />
         <Tarjeta fondo={color.cassis} icono="libro" titulo={h.colecciones} texto={h.coleccionesSub} boton={h.coleccionesBoton} onPress={() => abrir(en ? '/en/collections' : '/colecciones')} />
 
         <Texto tam={12} tono={color.gris} estilo={{ textAlign: 'center', paddingHorizontal: 20 }}>{h.responsable}</Texto>
