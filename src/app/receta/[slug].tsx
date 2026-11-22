@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Pressable, ScrollView, Share, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Boton, BotonIcono, Etiqueta, Ilustracion, Texto, Titular } from '../../components/ui';
+import { VideoReceta } from '../../components/VideoReceta';
 import { cantidadTexto } from '../../lib/compartido/medidas';
 import { useEstado } from '../../lib/estado';
 import { valor } from '../../lib/textos';
@@ -45,6 +46,7 @@ export default function Receta() {
           <View style={{ flexDirection: 'row', gap: 8 }}>
             {dato(t.receta.tiempo, r.tiempo_min ? `${r.tiempo_min} ${t.receta.min}` : null)}{dato(t.receta.vaso, r.vaso)}{dato(t.receta.tecnica, r.tecnica)}
           </View>
+          {r.video_url ? <VideoReceta url={r.video_url} nombre={r.nombre} /> : null}
 
           <View style={{ gap: 10, marginTop: 6 }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
