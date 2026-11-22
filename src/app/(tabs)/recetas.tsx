@@ -22,7 +22,7 @@ export default function Recetas() {
   const presentes = DESTILADOS.filter((d) => recetas.some((r) => r.destilado === d));
   const lista = useMemo(() => {
     const base = recetas.filter((r) => !dest || r.destilado === dest);
-    return buscar(q, base, (r) => ({ nombre: r.nombre, extra: [r.destilado, valor(r.destilado, idioma), ...r.ingredientes.map((i) => i.ingrediente)].join(' ') }));
+    return buscar(q, base, (r) => ({ nombre: r.nombre, alias: r.alias, extra: [r.destilado, valor(r.destilado, idioma), ...r.ingredientes.map((i) => i.ingrediente)].join(' ') }));
   }, [recetas, q, dest, idioma]);
 
   return (
