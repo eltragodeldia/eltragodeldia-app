@@ -65,7 +65,7 @@ function Carrusel({ recetas, nota }: { recetas: Receta[]; nota?: (r: Receta) => 
 }
 
 function Tarjeta({ fondo, titulo, texto, boton, onPress, icono }: { fondo: string; titulo: string; texto: string; boton: string; onPress: () => void; icono: NombreIcono }) {
-  const oscuro = fondo !== color.beige;
+  const oscuro = fondo !== color.beige && fondo !== color.wasabi;
   return (
     <View style={{ marginHorizontal: 20, backgroundColor: fondo, borderRadius: 24, padding: 18, gap: 10 }}>
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
@@ -169,6 +169,8 @@ export default function Inicio() {
             </View>
           </View>
         </Seccion>
+
+        <Tarjeta fondo={color.wasabi} icono="copa" titulo={t.antojo.titulo} texto={t.antojo.tarjeta} boton={t.antojo.tarjetaBoton} onPress={() => router.push('/que-me-tomo')} />
 
         {puedes.length ? (
           <Seccion titulo={h.yaPuedes} accion={h.irMiBar} onAccion={() => router.push('/mi-bar')}>

@@ -39,6 +39,7 @@ function Navegacion() {
         <Stack.Screen name="articulo/[slug]" />
         <Stack.Screen name="colecciones/index" />
         <Stack.Screen name="coleccion/[slug]" />
+        <Stack.Screen name="que-me-tomo" />
         <Stack.Screen name="preparar/[slug]" options={{ presentation: 'fullScreenModal', contentStyle: { backgroundColor: color.cassis } }} />
       </Stack.Protected>
       <Stack.Protected guard={!adentro}>
