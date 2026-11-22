@@ -1,9 +1,9 @@
-# Cada vez que se integra un cambio en main:
+# Cada vez que se integra un cambio en main, para iPhone y para Android por separado:
 # - Si la parte nativa de la app no cambió (mismo fingerprint que una versión ya armada),
 #   se publica una actualización rápida al canal production: llega sola a la app instalada.
-# - Si cambió (paquetes nuevos, permisos, íconos, app.json), se arma una versión nueva
-#   de iPhone y se manda a TestFlight.
-# Android se agrega cuando exista la cuenta de Google Play.
+# - Si cambió (paquetes nuevos, permisos, íconos, app.json), se arma una versión nueva.
+#   La de iPhone se manda a TestFlight. La de Android queda armada en expo.dev; el envío
+#   automático a Google Play se agrega cuando exista la cuenta de servicio de Play Console.
 name: Enviar a TestFlight
 
 on:
@@ -16,7 +16,8 @@ jobs:
     type: fingerprint
     environment: production
 
-  get_build:
+  # iPhone
+  get_build_ios:
     name: Buscar versión compatible de iPhone
     needs: [fingerprint]
     type: get-build
@@ -25,29 +26,58 @@ jobs:
       profile: production
       fingerprint_hash: ${{ needs.fingerprint.outputs.ios_fingerprint_hash }}
 
-  update:
-    name: Publicar actualización rápida
-    needs: [get_build]
-    if: ${{ needs.get_build.outputs.build_id }}
+  update_ios:
+    name: Actualización rápida de iPhone
+    needs: [get_build_ios]
+    if: ${{ needs.get_build_ios.outputs.build_id }}
     type: update
     environment: production
     params:
       platform: ios
       channel: production
 
-  build:
+  build_ios:
     name: Armar versión de iPhone
-    needs: [get_build]
-    if: ${{ !needs.get_build.outputs.build_id }}
+    needs: [get_build_ios]
+    if: ${{ !needs.get_build_ios.outputs.build_id }}
     type: build
     params:
       platform: ios
       profile: production
 
-  submit:
+  submit_ios:
     name: Mandar a TestFlight
-    needs: [build]
+    needs: [build_ios]
     type: submit
     params:
-      build_id: ${{ needs.build.outputs.build_id }}
+      build_id: ${{ needs.build_ios.outputs.build_id }}
+      profile: production
+
+  # Android
+  get_build_android:
+    name: Buscar versión compatible de Android
+    needs: [fingerprint]
+    type: get-build
+    params:
+      platform: android
+      profile: production
+      fingerprint_hash: ${{ needs.fingerprint.outputs.android_fingerprint_hash }}
+
+  update_android:
+    name: Actualización rápida de Android
+    needs: [get_build_android]
+    if: ${{ needs.get_build_android.outputs.build_id }}
+    type: update
+    environment: production
+    params:
+      platform: android
+      channel: production
+
+  build_android:
+    name: Armar versión de Android
+    needs: [get_build_android]
+    if: ${{ !needs.get_build_android.outputs.build_id }}
+    type: build
+    params:
+      platform: android
       profile: production
