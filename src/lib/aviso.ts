@@ -37,9 +37,11 @@ export async function pedirPermiso(): Promise<boolean> {
   return r.granted;
 }
 
+// El título va solo con el nombre del trago: en la pantalla bloqueada el título
+// tiene una sola línea y con "El trago de hoy:" delante se cortaba el nombre.
 const TEXTO = {
-  es: { titulo: (n: string) => `El trago de hoy: ${n}`, cierre: 'Toca para prepararlo.' },
-  en: { titulo: (n: string) => `Today's drink: ${n}`, cierre: 'Tap to make it.' },
+  es: { inicio: 'El trago de hoy.', cierre: 'Toca para prepararlo.' },
+  en: { inicio: "Today's drink.", cierre: 'Tap to make it.' },
 };
 
 /** Borra lo programado y, si el aviso está activo y hay permiso, programa los próximos días. */
@@ -55,7 +57,7 @@ export async function programarAvisos(recetas: Receta[], idioma: Idioma, activo:
     const r = tragoDelDia(recetas, fecha);
     if (!r) continue;
     await Notifications.scheduleNotificationAsync({
-      content: { title: tx.titulo(r.nombre), body: [r.resumen, tx.cierre].filter(Boolean).join(' '), data: { slug: r.slug } },
+      content: { title: r.nombre, body: [tx.inicio, r.resumen, tx.cierre].filter(Boolean).join(' '), data: { slug: r.slug } },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DATE, date: fecha },
     });
   }

@@ -7,7 +7,8 @@ import { Mapa, type MapaRef } from '../../components/Mapa';
 import { BotonIcono, Chip, Icono, Texto, Titular } from '../../components/ui';
 import { CATEGORIAS_LUGAR, type Lugar } from '../../lib/compartido/tipos';
 import { useEstado } from '../../lib/estado';
-import { COLOR_TIPO, distanciaKm, sinAcentos } from '../../lib/lugares';
+import { buscar } from '../../lib/compartido/buscar';
+import { COLOR_TIPO, distanciaKm } from '../../lib/lugares';
 import { valor } from '../../lib/textos';
 import { color, letra } from '../../lib/tema';
 
@@ -22,9 +23,9 @@ export default function Lugares() {
   const cats = CATEGORIAS_LUGAR.filter((c) => lugares.some((l) => (l.categorias ?? []).includes(c)));
 
   const lista = useMemo(() => {
-    const b = sinAcentos(q.trim());
-    const f = lugares.filter((l) => (!cat || (l.categorias ?? []).includes(cat)) && (!b || sinAcentos([l.nombre, l.barrio, l.ciudad, l.pedido].filter(Boolean).join(' ')).includes(b)));
-    if (!yo) return f;
+    const base = lugares.filter((l) => !cat || (l.categorias ?? []).includes(cat));
+    const f = buscar(q, base, (l) => ({ nombre: l.nombre, extra: [l.barrio, l.ciudad, l.pedido].filter(Boolean).join(' ') }));
+    if (!yo || q.trim()) return f;
     return [...f].sort((a, c) => (a.lat == null ? 1e9 : distanciaKm(yo, { lat: a.lat, lng: a.lng! })) - (c.lat == null ? 1e9 : distanciaKm(yo, { lat: c.lat, lng: c.lng! })));
   }, [lugares, cat, q, yo]);
 

@@ -76,6 +76,7 @@ const PATHS: Record<string, string[]> = {
   cerrar: ['M18 6 6 18', 'm6 6 12 12'],
   check: ['M20 6 9 17l-5-5'],
   campana: ['M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9', 'M10.3 21a1.94 1.94 0 0 0 3.4 0'],
+  play: ['M8 5v14l11-7Z'],
 };
 const CIRCULOS: Record<string, [number, number, number]> = { recetas: [11, 11, 7], cuenta: [12, 8, 4], mapa: [12, 10, 2.5], reloj: [12, 12, 9] };
 

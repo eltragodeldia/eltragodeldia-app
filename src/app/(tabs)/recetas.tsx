@@ -4,12 +4,12 @@ import { FlatList, ScrollView, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { TarjetaReceta } from '../../components/TarjetaReceta';
 import { Chip, Icono, Texto, Titular } from '../../components/ui';
+import { buscar } from '../../lib/compartido/buscar';
 import { DESTILADOS } from '../../lib/compartido/tipos';
 import { useEstado } from '../../lib/estado';
 import { valor } from '../../lib/textos';
 import { color, letra } from '../../lib/tema';
 
-const sinAcentos = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 
 export default function Recetas() {
   const { t, idioma, recetas } = useEstado();
@@ -21,9 +21,9 @@ export default function Recetas() {
   useScrollToTop(ref);
   const presentes = DESTILADOS.filter((d) => recetas.some((r) => r.destilado === d));
   const lista = useMemo(() => {
-    const b = sinAcentos(q.trim());
-    return recetas.filter((r) => (!dest || r.destilado === dest) && (!b || sinAcentos([r.nombre, r.destilado, ...r.ingredientes.map((i) => i.ingrediente)].join(' ')).includes(b)));
-  }, [recetas, q, dest]);
+    const base = recetas.filter((r) => !dest || r.destilado === dest);
+    return buscar(q, base, (r) => ({ nombre: r.nombre, extra: [r.destilado, valor(r.destilado, idioma), ...r.ingredientes.map((i) => i.ingrediente)].join(' ') }));
+  }, [recetas, q, dest, idioma]);
 
   return (
     <SafeAreaView edges={['top']} style={{ flex: 1, backgroundColor: color.crema }}>
