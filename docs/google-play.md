@@ -5,7 +5,7 @@ Textos y respuestas de El Trago del Día en Play Console (paquete `com.eltragode
 Imágenes en `docs/google-play/`:
 - `icono-512.png`: ícono de la app, 512 × 512.
 - `grafico-es.png` y `grafico-en.png`: gráfico destacado (feature graphic), 1024 × 500.
-- `es-1.png` a `es-6.png` y `en-1.png` a `en-6.png`: capturas de teléfono, 1080 × 2160 (Google Play pide que el lado largo no pase del doble del corto).
+- `es-1.png` a `es-6.png` y `en-1.png` a `en-6.png`: capturas de teléfono, 1080 × 1920 (Google Play pide 9:16 exacto).
 
 ## Datos generales
 
