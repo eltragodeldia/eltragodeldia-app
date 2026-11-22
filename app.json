@@ -60,7 +60,8 @@
         {
           "locationWhenInUsePermission": "El Trago del Día usa tu ubicación solo para mostrarte los bares más cerca de ti en el mapa."
         }
-      ]
+      ],
+      "./plugins/vertical-opcional.js"
     ],
     "scheme": "eltragodeldia",
     "backgroundColor": "#FDF6EC",
