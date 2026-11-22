@@ -52,6 +52,11 @@ export interface Receta {
   resumen_en?: string | null;
   historia_en?: string | null;
   error_comun_en?: string | null;
+  /** Firma editorial (db/017 del sitio). */
+  alias?: string | null;
+  consejo?: string | null;
+  consejo_en?: string | null;
+  version?: 'clasico' | 'mia' | null;
   vaso_en?: string | null;
   tecnica_en?: string | null;
   ocasion_en?: string | null;
@@ -84,6 +89,7 @@ export interface Lugar {
   ocasion: string | null;
   precio: '$' | '$$' | '$$$' | null;
   visitado: string | null;
+  ultima_visita?: string | null;
   horario: string | null;
   instagram_url: string | null;
   foto_url: string | null;

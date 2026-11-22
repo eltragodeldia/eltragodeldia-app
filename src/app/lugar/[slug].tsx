@@ -56,6 +56,7 @@ export default function LugarFicha() {
               {(l.categorias ?? []).map((c) => <View key={c} style={{ borderWidth: 2, borderColor: color.cassis, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 5 }}><Texto tam={13} peso="extra">{valor(c, idioma)}</Texto></View>)}
             </View>
           ) : null}
+          {bloque(m.visita, mesYAnio(l.ultima_visita, idioma) ?? l.visitado)}
           {bloque(m.horario, l.horario)}
           {bloque(m.direccion, l.direccion)}
           <View style={{ gap: 10, marginTop: 4 }}>
@@ -78,4 +79,15 @@ export default function LugarFicha() {
       </ScrollView>
     </SafeAreaView>
   );
+}
+
+/** La fecha de la última visita como mes y año; si no hay, el texto libre de antes. */
+function mesYAnio(fecha: string | null | undefined, idioma: 'es' | 'en') {
+  if (!fecha) return null;
+  const [a, mes] = fecha.split('-').map(Number);
+  if (!a || !mes) return null;
+  const nombres = idioma === 'en'
+    ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    : ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  return idioma === 'en' ? `${nombres[mes - 1]} ${a}` : `${nombres[mes - 1]} de ${a}`;
 }

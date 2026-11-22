@@ -37,8 +37,15 @@ export default function Receta() {
           <Ilustracion slug={r.slug} ancho={170} alto={220} estilo={{ alignSelf: 'center' }} />
         </SafeAreaView>
         <View style={{ padding: 20, gap: 14 }}>
-          <View style={{ alignSelf: 'flex-start', backgroundColor: color.azul, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 4 }}>
-            <Texto tam={11} peso="black" tono={color.crema} estilo={{ letterSpacing: 1.6, textTransform: 'uppercase' }}>{valor(r.destilado, idioma)}</Texto>
+          <View style={{ flexDirection: 'row', gap: 8 }}>
+            <View style={{ backgroundColor: color.azul, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 4 }}>
+              <Texto tam={11} peso="black" tono={color.crema} estilo={{ letterSpacing: 1.6, textTransform: 'uppercase' }}>{valor(r.destilado, idioma)}</Texto>
+            </View>
+            {r.version ? (
+              <View style={{ backgroundColor: r.version === 'mia' ? color.cassis : color.beige, borderRadius: 999, paddingHorizontal: 12, paddingVertical: 4 }}>
+                <Texto tam={11} peso="black" tono={r.version === 'mia' ? color.crema : color.cassis} estilo={{ letterSpacing: 1.6, textTransform: 'uppercase' }}>{t.receta[r.version]}</Texto>
+              </View>
+            ) : null}
           </View>
           <Titular tam={32}>{r.nombre}</Titular>
           <View style={{ width: 72, height: 8, backgroundColor: color.wasabi, borderRadius: 4 }} />
@@ -85,6 +92,12 @@ export default function Receta() {
               </View>
             ))}
           </View>
+          {r.consejo ? (
+            <View style={{ borderWidth: 2, borderColor: color.cassis, borderRadius: 20, padding: 16, gap: 6 }}>
+              <Etiqueta>{t.receta.consejo}</Etiqueta>
+              <Texto>{r.consejo}</Texto>
+            </View>
+          ) : null}
           {r.error_comun ? (
             <View style={{ backgroundColor: color.cassis, borderRadius: 20, padding: 16, gap: 6 }}>
               <Etiqueta tono={color.wasabi}>{t.receta.error}</Etiqueta>

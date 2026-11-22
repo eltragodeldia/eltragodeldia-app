@@ -45,6 +45,7 @@ export function enIdioma(r: Receta, idioma: Idioma): Receta {
     resumen: r.resumen_en ?? r.resumen,
     historia: r.historia_en ?? r.historia,
     error_comun: r.error_comun_en ?? r.error_comun,
+    consejo: r.consejo_en || r.consejo,
     vaso: r.vaso_en ?? r.vaso,
     tecnica: r.tecnica_en ?? r.tecnica,
     ocasion: r.ocasion_en ?? r.ocasion,

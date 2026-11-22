@@ -1,6 +1,6 @@
 // Búsqueda de recetas que perdona: palabras en cualquier orden, sin acentos,
 // por el comienzo de cada palabra y con uno o dos errores de tipeo.
-// Copiada del sitio (src/lib/buscar.ts); si cambia allá, se copia igual aquí.
+// La misma función vive en la app (src/lib/compartido/buscar.ts); si cambia aquí, se copia igual.
 
 /** Texto sin acentos, en minúsculas, con ñ como n y sin signos. */
 export function normalizar(s: string): string {
@@ -41,10 +41,10 @@ function distancia(a: string, b: string, tope: number): number {
 const errores = (n: number) => (n >= 7 ? 2 : n >= 4 ? 1 : 0);
 
 /** Qué tan bien una palabra buscada encaja con una palabra del texto: 3 exacta, 2 empieza igual, 1 con error de tipeo, 0 nada. */
-function encaje(buscada: string, palabra: string): number {
+function encaje(buscada: string, palabra: string, conErrores = true): number {
   if (palabra === buscada) return 3;
   if (palabra.startsWith(buscada)) return 2;
-  const e = errores(buscada.length);
+  const e = conErrores ? errores(buscada.length) : 0;
   if (!e) return 0;
   // Compara con la palabra completa y con su comienzo del mismo largo (por si aún está escribiendo).
   if (distancia(buscada, palabra, e) <= e) return 1;
@@ -56,7 +56,30 @@ export interface Buscable {
   nombre: string;
   /** Destilado, ingredientes y lo demás que también cuenta, pero menos que el nombre. */
   extra: string;
+  /** Otros nombres del mismo trago (destornillador, cubata...). Cuentan igual que el nombre. */
+  alias?: string | null;
 }
+
+/**
+ * Palabras que en un país se dicen de una forma y en otro de otra. Lo buscado también encuentra su par.
+ * Lima y limón no se tocan: en las recetas son frutas distintas.
+ */
+const SINONIMOS: Record<string, string[]> = {
+  zumo: ['jugo'], jugo: ['zumo', 'juice'],
+  jarabe: ['sirope'], almibar: ['sirope'], sirope: ['jarabe', 'syrup'],
+  pomelo: ['toronja'], toronja: ['pomelo', 'grapefruit'],
+  anana: ['pina'], ananas: ['pina'], pina: ['anana', 'pineapple'],
+  frutilla: ['fresa'], frutillas: ['fresa'], fresa: ['frutilla', 'strawberry'],
+  parchita: ['maracuya'], chinola: ['maracuya'], maracuya: ['parchita', 'chinola', 'passion'],
+  hierbabuena: ['menta'], menta: ['hierbabuena', 'mint'],
+  jengibre: ['ginger'], ginger: ['jengibre'],
+  rum: ['ron'], ron: ['rum'],
+  whiskey: ['whisky'], whisky: ['whiskey'],
+  cafe: ['espresso', 'coffee'], espresso: ['cafe'], expreso: ['espresso'],
+  coco: ['coconut'], cream: ['crema'], crema: ['cream'],
+};
+
+const variantes = (b: string) => [b, ...(SINONIMOS[b] ?? [])];
 
 /**
  * Puntaje de una receta para lo buscado. 0 = no aparece.
@@ -66,18 +89,23 @@ export function puntaje(q: string, item: Buscable): number {
   const buscadas = palabras(q);
   if (!buscadas.length) return 1;
   const nombre = palabras(item.nombre);
+  const alias = (item.alias ?? '').split(',').map(palabras).filter((a) => a.length);
   const extra = palabras(item.extra);
   // El nombre pegado ayuda con "pinacolada" o "old fashioned" escrito junto.
-  const pegado = nombre.join('');
+  const pegados = [nombre.join(''), ...alias.map((a) => a.join(''))];
+  const enNombres = [...nombre, ...alias.flat()];
   let total = 0;
   for (const b of buscadas) {
-    const enNombre = Math.max(0, ...nombre.map((p) => encaje(b, p)), pegado.startsWith(b) && b.length > 3 ? 2 : 0);
-    const enExtra = Math.max(0, ...extra.map((p) => encaje(b, p)));
+    const vs = variantes(b);
+    // Los sinónimos solo cuentan escritos bien: "fresa" con un error ya sería "fresco".
+    const enNombre = Math.max(0, ...vs.flatMap((v, i) => enNombres.map((p) => encaje(v, p, i === 0))), pegados.some((x) => x.startsWith(b)) && b.length > 3 ? 2 : 0);
+    const enExtra = Math.max(0, ...vs.flatMap((v, i) => extra.map((p) => encaje(v, p, i === 0))));
     if (!enNombre && !enExtra) return 0;
     total += enNombre ? 10 + enNombre * 3 : enExtra;
   }
   // Si todo lo buscado coincide con el comienzo del nombre, va primero.
-  if (normalizar(item.nombre).startsWith(buscadas.join(' '))) total += 20;
+  const junto = buscadas.join(' ');
+  if (normalizar(item.nombre).startsWith(junto) || (item.alias ?? '').split(',').some((a) => palabras(a).join(' ').startsWith(junto))) total += 20;
   return total;
 }
 
